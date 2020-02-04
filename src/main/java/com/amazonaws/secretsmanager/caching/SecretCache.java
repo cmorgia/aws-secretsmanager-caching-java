@@ -16,6 +16,7 @@ import com.amazonaws.secretsmanager.caching.cache.LRUCache;
 import com.amazonaws.secretsmanager.caching.cache.SecretCacheItem;
 import com.amazonaws.services.secretsmanager.AWSSecretsManager;
 import com.amazonaws.services.secretsmanager.AWSSecretsManagerClientBuilder;
+import com.amazonaws.services.secretsmanager.model.DescribeSecretResult;
 import com.amazonaws.services.secretsmanager.model.GetSecretValueResult;
 
 import java.nio.ByteBuffer;
@@ -123,6 +124,18 @@ public class SecretCache implements AutoCloseable {
         GetSecretValueResult gsv = secret.getSecretValue();
         if (null == gsv) { return null; }
         return gsv.getSecretString();
+    }
+
+    /**
+     * Method to retrieve the description of a secret from AWS Secrets Manager.
+     *
+     * @param secretId
+     *        The identifier for the secret being requested.
+     * @return The string secret
+     */
+    public DescribeSecretResult describeSecret(final String secretId) {
+        SecretCacheItem secret = this.getCachedSecret(secretId);
+        return secret.getResult().clone();
     }
 
     /**

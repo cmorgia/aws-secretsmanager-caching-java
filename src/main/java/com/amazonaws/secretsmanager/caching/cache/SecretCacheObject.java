@@ -136,7 +136,7 @@ public abstract class SecretCacheObject<T> {
      * @return the result object
      */
     @SuppressWarnings("unchecked")
-    private T getResult() {
+    public T getResult() {
         if (null != this.config.getCacheHook()) {
             return (T)this.config.getCacheHook().get(this.data);
         }
