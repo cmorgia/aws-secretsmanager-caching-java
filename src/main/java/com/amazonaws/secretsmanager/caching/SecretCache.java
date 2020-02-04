@@ -12,14 +12,14 @@
  */
 package com.amazonaws.secretsmanager.caching;
 
+import java.nio.ByteBuffer;
+
 import com.amazonaws.secretsmanager.caching.cache.LRUCache;
 import com.amazonaws.secretsmanager.caching.cache.SecretCacheItem;
 import com.amazonaws.services.secretsmanager.AWSSecretsManager;
 import com.amazonaws.services.secretsmanager.AWSSecretsManagerClientBuilder;
 import com.amazonaws.services.secretsmanager.model.DescribeSecretResult;
 import com.amazonaws.services.secretsmanager.model.GetSecretValueResult;
-
-import java.nio.ByteBuffer;
 
 /**
  * Provides the primary entry-point to the AWS Secrets Manager client cache SDK.
@@ -135,7 +135,9 @@ public class SecretCache implements AutoCloseable {
      */
     public DescribeSecretResult describeSecret(final String secretId) {
         SecretCacheItem secret = this.getCachedSecret(secretId);
-        return secret.getResult().clone();
+        // side effect is to refresh if needed
+        secret.getSecretValue();
+        return secret.getResult();
     }
 
     /**
