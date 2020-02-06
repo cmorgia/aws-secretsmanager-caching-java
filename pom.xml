@@ -8,7 +8,7 @@
     <packaging>jar</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>AWS Secrets Manager caching client for Java</description>
-    <url>https://github.com/aws/aws-secretsmanager-caching-java</url>
+    <url>https://github.com/cmorgia/aws-secretsmanager-caching-java</url>
 
     <licenses>
         <license>
