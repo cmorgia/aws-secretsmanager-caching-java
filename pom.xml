@@ -1,14 +1,12 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.amazonaws.secretsmanager</groupId>
+    <groupId>io.github.cmorgia</groupId>
     <artifactId>aws-secretsmanager-caching-java</artifactId>
     <version>1.0.1</version>
     <packaging>jar</packaging>
-
-
-    <name>aws-secretsmanager-caching-java</name>
+    <name>${project.groupId}:${project.artifactId}</name>
     <description>AWS Secrets Manager caching client for Java</description>
     <url>https://github.com/aws/aws-secretsmanager-caching-java</url>
 
@@ -22,6 +20,12 @@
 
     <developers>
         <developer>
+            <name>Claudio Morgia</name>
+            <email>cmorgia@gmail.com</email>
+            <organization>Github</organization>
+            <organizationUrl>https://github.com/cmorgia</organizationUrl>
+        </developer>
+        <developer>
             <id>amazonwebservices</id>
             <organization>Amazon Web Services</organization>
             <organizationUrl>https://aws.amazon.com</organizationUrl>
@@ -32,8 +36,22 @@
     </developers>
 
     <scm>
-        <url>https://github.com/aws/aws-secretsmanager-caching-java.git</url>
+        <!-- Should be format scm:git:git or scm:git:https -->
+        <connection>scm:git:https://github.com/cmorgia/aws-secretsmanager-caching-java.git</connection>
+        <developerConnection>scm:git:ssh://github.com/cmorgia/aws-secretsmanager-caching-java.git</developerConnection>
+        <url>https://github.com/cmorgia/aws-secretsmanager-caching-java</url>
+        <tag>HEAD</tag>
     </scm>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -147,9 +165,35 @@
 
     <profiles>
         <profile>
-            <id>publishing</id>
+            <id>release</id>
             <build>
                 <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>3.0.0</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>3.0.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
@@ -170,8 +214,8 @@
                         <version>1.6.8</version>
                         <extensions>true</extensions>
                         <configuration>
-                            <serverId>sonatype-nexus-staging</serverId>
-                            <nexusUrl>https://aws.oss.sonatype.org</nexusUrl>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
                             <autoReleaseAfterClose>true</autoReleaseAfterClose>
                         </configuration>
                     </plugin>
