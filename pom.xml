@@ -4,7 +4,7 @@
 
     <groupId>io.github.cmorgia</groupId>
     <artifactId>aws-secretsmanager-caching-java</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <packaging>jar</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>AWS Secrets Manager caching client for Java</description>
